@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\SignUpRequest;
 use App\Services\UserServiceInterface;
 use App\Http\Requests\User\SignInRequest;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -47,5 +48,31 @@ class AuthController extends Controller
         }
 
         return redirect()->intended(action('User\IndexController@index'));
+    }
+
+    public function index() {
+        return view('pages.user.auth.index', [
+        ]);
+    }
+
+    public function oauthCallback(Request $request) {
+        $http = new \GuzzleHttp\Client;
+
+        $response = $http->post(\Config::get('oauth.provider.token'), [
+            'form_params' => [
+                'client_id'     => \Config::get('oauth.client_id'),
+                'client_secret' => \Config::get('oauth.client_secret'),
+                'grant_type'    => \Config::get('oauth.grant_type'),
+                'redirect_uri'  => \Config::get('oauth.consumer.callback'),
+                'code'          => $request->code,
+            ],
+        ]);
+        $accessToken = json_decode((string) $response->getBody(), true);
+
+        if (is_null($accessToken)) {
+            return redirect()->action('User\AuthController@getSignIn');
+        }
+        $this->userService->signInByOauth($accessToken);
+        return redirect()->action('User\AuthController@index');
     }
 }

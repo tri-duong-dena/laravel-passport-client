@@ -34,7 +34,14 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest(action('User\AuthController@getSignIn'));
+                $query = http_build_query([
+                    'client_id'     => \Config::get('oauth.client_id'),
+                    'redirect_uri'  => \Config::get('oauth.consumer.callback'),
+                    'response_type' => 'code',
+                    'scope'         => '',
+                ]);
+
+                return redirect(\Config::get('oauth.provider.authorize') . '?' . $query);
             }
         }
         view()->share('authUser', $this->userService->getUser());

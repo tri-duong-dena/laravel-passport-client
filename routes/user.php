@@ -4,6 +4,8 @@
     \Route::get('/', 'User\IndexController@index');
 
     \Route::group(['middleware' => ['user.guest']], function () {
+        \Route::get('oauth/callback', 'User\AuthController@oauthCallback');
+
         \Route::get('signin', 'User\AuthController@getSignIn');
         \Route::post('signin', 'User\AuthController@postSignIn');
 
@@ -22,6 +24,6 @@
     });
 
     \Route::group(['middleware' => ['user.auth']], function () {
-
+        \Route::get('auth', 'User\AuthController@index');
     });
 });
