@@ -48,7 +48,11 @@
 <div class="container">
     <p class="content">
         <div class="title">Laravel Boilerplate</div>
+        <div id="reacroot"></div>
+        <div id="rootelement"></div>
+        <div id="root2"></div>
         <p><a href="https://github.com/takaaki-mizuno/laravel-boilerplate/">GitHub</a></p>
     </div>
 </div>
+    <script src="/js/app.js"></script>
 @stop

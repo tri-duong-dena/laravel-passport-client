@@ -14,4 +14,5 @@ var elixir = require('laravel-elixir');
 elixir.config.css.outputFolder = 'static/user/css/app.css';
 elixir(function(mix) {
     mix.sass('app.scss');
+    mix.browserify('app.js');
 });
