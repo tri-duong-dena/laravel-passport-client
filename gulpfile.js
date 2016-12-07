@@ -1,4 +1,5 @@
 var elixir = require('laravel-elixir');
+elixir.config.js.browserify.transformers[0].options.stage = 0
 
 /*
  |--------------------------------------------------------------------------
