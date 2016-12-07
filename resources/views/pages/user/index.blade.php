@@ -47,10 +47,12 @@
 @section('content')
 <div class="container">
     <p class="content">
-        <div class="title">Laravel Boilerplate</div>
+        <div>Laravel Boilerplate Passport Consumer React sample</div>
         <div id="reacroot"></div>
+        <div id="reduxel"></div>
         <div id="rootelement"></div>
         <div id="root2"></div>
+        <div id="root"></div>
         <p><a href="https://github.com/takaaki-mizuno/laravel-boilerplate/">GitHub</a></p>
     </div>
 </div>

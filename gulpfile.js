@@ -1,4 +1,14 @@
 var elixir = require('laravel-elixir');
+require('babel-preset-react');
+elixir.config.js.browserify.transformers[0].options.stage = 0;
+//require('laravel-elixir-vueify');
+
+
+// elixir.config.js.babel.options.presets = {
+//     "react"
+// };
+
+// elixir.config.js.babel.options.presets.push("react");
 
 /*
  |--------------------------------------------------------------------------

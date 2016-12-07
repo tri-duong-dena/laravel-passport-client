@@ -1,41 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Counter from './Counter';
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import createLogger from 'redux-logger'
+import thunk from 'redux-thunk'
+import reducer from './reducers'
+import { getAllProducts } from './actions'
+import App from './containers/App'
 
-// sample render
-function tick() {
-  const element = (
-    <div>
-      <h1>Hello, world!</h1>
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
-    </div>
-  );
-  ReactDOM.render(
-    element,
-    document.getElementById('rootelement')
-  );
+const middleware = [ thunk ];
+if (process.env.NODE_ENV !== 'production') {
+  middleware.push(createLogger());
 }
 
-function Welcome(props) {
-  return <h1>Hello, {props.name}</h1>;
-}
+const store = createStore(
+  reducer,
+  applyMiddleware(...middleware)
+)
 
-function App2(){
-	return(
-		<div>
-			<Welcome name="sample 1"/>
-			<Welcome name="sample 2"/>
-		</div>
-);
-}
-ReactDOM.render(
-  <App2/>,
-  document.getElementById('root2')
-);
+store.dispatch(getAllProducts())
 
-setInterval(tick, 1000);
-
-// sample render counter
-ReactDOM.render(<Counter />,document.getElementById('reacroot'));
-
-
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
